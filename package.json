@@ -7,7 +7,7 @@
     "build:production": "gulp build --production",
     "deploy": "npm test && git push heroku master",
     "postinstall": "npm run build:production",
-    "start": "node server.js",
+    "start": "nodemon server.js --ignore public/",
     "watch": "gulp"
   },
   "dependencies": {
@@ -39,7 +39,9 @@
     "vinyl-buffer": "^1.0.0",
     "yargs": "^4.3.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
   "engines": {
     "node": "6.1.0"
   }

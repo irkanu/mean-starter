@@ -87,7 +87,7 @@ if (app.get('env') === 'production') {
 }
 
 app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + app.get('port'));
+  console.log('Express server listening on port ' + app.get('port') + ' in ' + app.get('env').toUpperCase() + ' environment.');
 });
 
 module.exports = app;
