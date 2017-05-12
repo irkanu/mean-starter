@@ -7,65 +7,55 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const request = require('request');
 const routes = require('./routes/index');
+const helper = require('./helpers');
 
 // Load environment variables from .env file
 dotenv.load();
 
-// Models
+// Import all of the models
 const User = require('./models/User');
 
+// Create the Express app
 const app = express();
 
+// Mongoose configuration
 mongoose.connect(process.env.MONGODB);
-mongoose.connection.on('error', function () {
-    console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
-    process.exit(1);
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+mongoose.connection.on('error', (err) => {
+    console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
 
-app.set('port', process.env.PORT || 3000);
+// Gzip and deflate
 app.use(compression());
+
+// Enable logging
 app.use(logger('dev'));
+
+// Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+// Exposes a bunch of methods for validating data.
 app.use(expressValidator());
+
+// Populates req.cookies with any cookies that came along with the request.
 app.use(cookieParser());
+
+// Tell Express to serve static files from the public folder.
+// Anything in public/ will just be served up as the file it is.
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function (req, res, next) {
-    req.isAuthenticated = function () {
-        var token = (req.headers.authorization && req.headers.authorization.split(' ')[1]) || req.cookies.token;
-        try {
-            return jwt.verify(token, process.env.TOKEN_SECRET);
-        } catch (err) {
-            return false;
-        }
-    };
-
-    if (req.isAuthenticated()) {
-        var payload = req.isAuthenticated();
-        User.findById(payload.sub, function (err, user) {
-            req.user = user;
-            next();
-        });
-    } else {
-        next();
-    }
-});
+// Verify the JSON web token & attach to user's request
+app.use(helper.handleJWT);
 
 // Load our routes!
 app.use('/', routes);
 
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'app', 'index.html'));
-});
-
-app.get('*', function (req, res) {
-    res.redirect('/#' + req.originalUrl);
-});
+// Clean up the Angular # on URL
+app.get('*', helper.cleanHash);
 
 // Production error handler
 if (app.get('env') === 'production') {
@@ -75,8 +65,8 @@ if (app.get('env') === 'production') {
     });
 }
 
-app.listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port') + ' in ' + app.get('env').toUpperCase() + ' environment.');
+app.listen(process.env.PORT || 3000, () => {
+    console.log('Express server listening on port ' + process.env.PORT || 3000 + ' in ' + app.get('env').toUpperCase() + ' environment.');
 });
 
 module.exports = app;

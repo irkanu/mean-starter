@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user');
 const contactController = require('../controllers/contact');
+const path = require('path');
+
+// Home Route
+router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../app', 'index.html'));
+});
 
 // Contact Controller Routes
 router.post('/contact', contactController.contactPost);
