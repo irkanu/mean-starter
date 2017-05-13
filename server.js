@@ -16,7 +16,7 @@ const helper = require('./helpers');
 dotenv.load();
 
 // Import all of the models
-const User = require('./models/User');
+require('./models/User');
 
 // Create the Express app
 const app = express();
