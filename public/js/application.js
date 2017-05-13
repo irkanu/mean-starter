@@ -151,12 +151,28 @@ angular.module('MyApp')
   }]);
 
 angular.module('MyApp')
-  .controller('ProfileCtrl', ["$scope", "$rootScope", "$location", "$window", "$auth", "Account", function($scope, $rootScope, $location, $window, $auth, Account) {
+  .controller('ProfileCtrl', ["$scope", "$rootScope", "$location", "$window", "$auth", "Account", "Org", function($scope, $rootScope, $location, $window, $auth, Account, Org) {
     $scope.profile = $rootScope.currentUser;
 
     $scope.updateProfile = function() {
       Account.updateProfile($scope.profile)
         .then(function(response) {
+          $rootScope.currentUser = response.data.user;
+          $window.localStorage.user = JSON.stringify(response.data.user);
+          $scope.messages = {
+            success: [response.data]
+          };
+        })
+        .catch(function(response) {
+          $scope.messages = {
+            error: Array.isArray(response.data) ? response.data : [response.data]
+          };
+        });
+    };
+
+    $scope.createOrg = function() {
+      Org.createOrg($scope.org)
+        .then(function(response){
           $rootScope.currentUser = response.data.user;
           $window.localStorage.user = JSON.stringify(response.data.user);
           $scope.messages = {
@@ -308,3 +324,12 @@ angular.module('MyApp')
       }
     };
   }]);
+angular.module('MyApp')
+  .factory('Org', ["$http", function($http) {
+    return {
+      createOrg: function(data) {
+        return $http.post('/org', data);
+      }
+    };
+  }]);
+  

@@ -17,6 +17,7 @@ dotenv.load();
 
 // Import all of the models
 require('./models/User');
+require('./models/Org');
 
 // Create the Express app
 const app = express();

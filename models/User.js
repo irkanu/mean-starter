@@ -1,8 +1,9 @@
-var crypto = require('crypto');
-var bcrypt = require('bcrypt-nodejs');
-var mongoose = require('mongoose');
+const crypto = require('crypto');
+const bcrypt = require('bcrypt-nodejs');
+const mongoose = require('mongoose');
+const autopopulate = require('mongoose-autopopulate');
 
-var schemaOptions = {
+const schemaOptions = {
   timestamps: true,
   versionKey: false,
   toJSON: {
@@ -15,7 +16,7 @@ var schemaOptions = {
   },
 };
 
-var userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: String,
   email: {
     type: String,
@@ -32,11 +33,21 @@ var userSchema = new mongoose.Schema({
   twitter: String,
   google: String,
   github: String,
-  vk: String
+  vk: String,
+  orgs: [{
+    role: String,
+    org: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Org',
+      autopopulate: {
+        select: 'name'
+      }
+    }
+  }]
 }, schemaOptions);
 
 userSchema.pre('save', function(next) {
-  var user = this;
+  const user = this;
   if (!user.isModified('password')) {
     return next();
   }
@@ -58,10 +69,13 @@ userSchema.virtual('gravatar').get(function() {
   if (!this.get('email')) {
     return 'https://gravatar.com/avatar/?s=200&d=retro';
   }
-  var md5 = crypto.createHash('md5').update(this.get('email')).digest('hex');
+  const md5 = crypto.createHash('md5').update(this.get('email')).digest('hex');
   return 'https://gravatar.com/avatar/' + md5 + '?s=200&d=retro';
 });
 
-var User = mongoose.model('User', userSchema);
+// Helper library to autopopulate our organizations on the user.
+userSchema.plugin(autopopulate);
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

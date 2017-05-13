@@ -13,8 +13,19 @@
             <ul class="nav navbar-nav">
                 <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
                 <li ng-class="{ active: isActive('/contact')}"><a href="/contact">Contact</a></li>
+
             </ul>
             <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
+                <li ng-if="currentUser.orgs" class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        Organizations <i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="o in currentUser.orgs">
+                            <a href="#">{{o.org.name}}</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="navbar-avatar dropdown-toggle">
                         <img ng-src="{{currentUser.picture || currentUser.gravatar}}"> {{currentUser.name || currentUser.email || currentUser.id}} <i class="caret"></i>
@@ -36,6 +47,6 @@
 
 <div class="container">
   <pre>
-  {{ currentUser | json }}
+  {{ currentUser.orgs | json }}
 </pre>
 </div>
