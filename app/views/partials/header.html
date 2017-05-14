@@ -16,7 +16,7 @@
 
             </ul>
             <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
-                <li ng-if="currentUser.orgs" class="dropdown">
+                <li ng-if="currentUser.orgs.length > 0" class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">
                         Organizations <i class="caret"></i>
                     </a>
