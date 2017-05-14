@@ -3,6 +3,10 @@ angular.module('MyApp')
 
         $scope.init = function() {};
 
+        $scope.createProject = function() {
+
+        };
+
         $scope.init();
 
     });

@@ -42,16 +42,6 @@ angular.module('MyApp', ['ngRoute', 'satellizer', 'ui.bootstrap'])
                 controller: 'OrgCtrl',
                 resolve: {loginRequired: loginRequired}
             })
-            // .when('/org/:id/projects', {
-            //     templateUrl: 'views/org/projects.html',
-            //     controller: 'OrgProjectsCtrl',
-            //     resolve: {loginRequired: loginRequired}
-            // })
-            // .when('/org/:id/settings', {
-            //     templateUrl: 'views/org/projects.html',
-            //     controller: 'OrgSettingsCtrl',
-            //     resolve: {loginRequired: loginRequired}
-            // })
             .otherwise({
                 templateUrl: 'views/partials/404.html'
             });
@@ -166,7 +156,7 @@ angular.module('MyApp')
   }]);
 
 angular.module('MyApp')
-  .controller('OrgCtrl', ["$scope", "$location", "$window", "$auth", "$routeParams", "Org", function($scope, $location, $window, $auth, $routeParams, Org) {
+  .controller('OrgCtrl', ["$scope", "$rootScope", "$location", "$window", "$auth", "$routeParams", "Org", function($scope, $rootScope, $location, $window, $auth, $routeParams, Org) {
 
     $scope.init = function() {
       $scope.getCurrentOrg();
@@ -192,6 +182,10 @@ angular.module('MyApp')
     .controller('OrgProjectsCtrl', ["$scope", function($scope) {
 
         $scope.init = function() {};
+
+        $scope.createProject = function() {
+
+        };
 
         $scope.init();
 

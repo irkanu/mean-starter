@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('OrgCtrl', function($scope, $location, $window, $auth, $routeParams, Org) {
+  .controller('OrgCtrl', function($scope, $rootScope, $location, $window, $auth, $routeParams, Org) {
 
     $scope.init = function() {
       $scope.getCurrentOrg();
