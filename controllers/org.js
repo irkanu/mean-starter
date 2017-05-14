@@ -1,7 +1,10 @@
 const Org = require('../models/Org');
 const User = require('../models/User');
 
-exports.orgPost = async(req, res, next) => {
+/**
+ * POST /org
+ */
+exports.orgPost = async (req, res, next) => {
     req.assert('name', 'Organization name cannot be blank!').notEmpty();
 
     var errors = req.validationErrors();
@@ -36,4 +39,25 @@ exports.orgPost = async(req, res, next) => {
             });
         }
     });
+};
+
+/**
+ * GET /org/:id
+ */
+exports.orgGet = async (req, res) => {
+	
+  req.assert('id', 'Orgnaization ID must be specified!').notEmpty();
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    return res.status(400).send(errors);
+  }
+
+  Org.findById(req.params.id, (err, org) => {
+  	if (!err) {
+  		res.status(200).json(org);
+  	}
+  });
+
 };

@@ -37,4 +37,9 @@ router.post('/org',
 	orgController.orgPost
 );
 
+// router.get('/org/:id',
+// 	// userController.ensureAuthenticated,
+// 	orgController.orgGet
+// );
+
 module.exports = router;

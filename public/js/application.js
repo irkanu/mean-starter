@@ -37,6 +37,11 @@ angular.module('MyApp', ['ngRoute', 'satellizer'])
         controller: 'ResetCtrl',
         resolve: { skipIfAuthenticated: skipIfAuthenticated }
       })
+      .when('/org/:id', {
+        templateUrl: 'partials/org.html',
+        controller: 'OrgCtrl',
+        resolve: { loginRequired: loginRequired }
+      })
       .otherwise({
         templateUrl: 'partials/404.html'
       });
@@ -148,6 +153,11 @@ angular.module('MyApp')
           }
         });
     };
+  }]);
+
+angular.module('MyApp')
+  .controller('OrgCtrl', ["$scope", "$location", "$window", "$auth", function($scope, $location, $window, $auth) {
+
   }]);
 
 angular.module('MyApp')

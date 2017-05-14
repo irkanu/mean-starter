@@ -22,7 +22,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li ng-repeat="o in currentUser.orgs">
-                            <a href="#">{{o.org.name}}</a>
+                            <a href="/org/{{o.org._id}}">{{o.org.name}}</a>
                         </li>
                     </ul>
                 </li>
@@ -47,6 +47,6 @@
 
 <div class="container">
   <pre>
-  {{ currentUser.orgs | json }}
+  {{ currentUser.name | json }}
 </pre>
 </div>
