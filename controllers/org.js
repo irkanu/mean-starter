@@ -7,7 +7,7 @@ const User = require('../models/User');
 exports.orgPost = async (req, res, next) => {
     req.assert('name', 'Organization name cannot be blank!').notEmpty();
 
-    var errors = req.validationErrors();
+    const errors = req.validationErrors();
 
     if (errors) {
         return res.status(400).send(errors);
@@ -42,22 +42,22 @@ exports.orgPost = async (req, res, next) => {
 };
 
 /**
- * GET /org/:id
+ * POST /org/:id
  */
-exports.orgGet = async (req, res) => {
-	
-  req.assert('id', 'Orgnaization ID must be specified!').notEmpty();
+exports.orgGetById = async (req, res) => {
 
-  var errors = req.validationErrors();
+    // req.assert('id', 'Organization ID must be specified!').notEmpty();
 
-  if (errors) {
-    return res.status(400).send(errors);
-  }
+    const errors = req.validationErrors();
 
-  Org.findById(req.params.id, (err, org) => {
-  	if (!err) {
-  		res.status(200).json(org);
-  	}
-  });
+    if (errors) {
+        return res.status(400).send(errors);
+    }
+
+    Org.findById(req.params.id, (err, org) => {
+        if (!err) {
+            res.status(200).json(org);
+        }
+    });
 
 };

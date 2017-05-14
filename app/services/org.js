@@ -4,9 +4,9 @@ angular.module('MyApp')
       createOrg: function(data) {
       	return $http.post('/org', data);
       },
-      getOrg: function(id) {
-      	return $http.get('/org/' + id);
-      };
+      getOrgById: function(id) {
+      	return $http.post('/org/' + id);
+      }
     };
   });
   
