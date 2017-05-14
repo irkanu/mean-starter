@@ -1,13 +1,33 @@
 <section ng-controller="OrgSettingsCtrl">
     <h2>Settings</h2>
 
-
-	<uib-tabset active="active" vertical="true" class="tabs-left">
-    <uib-tab index="0" heading="General">
-    	Vertical content 1
-	</uib-tab>
-    <uib-tab index="1" heading="Users">Vertical content 2</uib-tab>
-    <uib-tab index="2" heading="Billing">Vertical content 2</uib-tab>
-  </uib-tabset>
+    <div class="row">
+        <div class="col-sm-3">
+            <ul class="nav nav-tabs nav-stacked nav-pills">
+                <li ng-class="{'active': view_tab == 'general'}">
+                    <a ng-click="changeTab('general')">General</a>
+                </li>
+                <li ng-class="{'active': view_tab == 'users'}">
+                    <a ng-click="changeTab('users')">Users</a>
+                </li>
+                <li ng-class="{'active': view_tab == 'billing'}">
+                    <a ng-click="changeTab('billing')">Billing</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
+            <div class="tab-content">
+                <div class="tab-pane" ng-show="view_tab == 'general'">
+                    <div ng-include="'views/org/settings/settings.general.html'"></div>
+                </div>
+                <div class="tab-pane" ng-show="view_tab == 'users'">
+                    <div ng-include="'views/org/settings/settings.users.html'"></div>
+                </div>
+                <div class="tab-pane" ng-show="view_tab == 'billing'">
+                    <div ng-include="'views/org/settings/settings.billing.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section>

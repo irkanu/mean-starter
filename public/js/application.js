@@ -192,9 +192,30 @@ angular.module('MyApp')
     }]);
 
 angular.module('MyApp')
-    .controller('OrgSettingsCtrl', ["$scope", function($scope) {
+    .controller('OrgSettingsCtrl', ["$scope", "Org", function ($scope, Org) {
 
-        $scope.init = function() {};
+        $scope.init = function () {
+            $scope.view_tab = 'general';
+        };
+
+        $scope.changeTab = function (tab) {
+            $scope.view_tab = tab;
+        };
+
+        $scope.updateGeneralOrgSettings = function() {
+            Org.updateGeneralOrgSettings($scope.currentOrg)
+                .then(function(response){
+                    $scope.currentOrg = response.data.org;
+                    $scope.messages = {
+                        success: [response.data]
+                    };
+                })
+                .catch(function(response) {
+                    $scope.messages = {
+                        error: Array.isArray(response.data) ? response.data : [response.data]
+                    };
+                });
+        };
 
         $scope.init();
 
@@ -375,14 +396,17 @@ angular.module('MyApp')
     };
   }]);
 angular.module('MyApp')
-  .factory('Org', ["$http", function($http) {
-    return {
-      createOrg: function(data) {
-      	return $http.post('/org', data);
-      },
-      getOrgById: function(id) {
-      	return $http.post('/org/' + id);
-      }
-    };
-  }]);
+    .factory('Org', ["$http", function ($http) {
+        return {
+            createOrg: function (data) {
+                return $http.post('/org', data);
+            },
+            getOrgById: function (id) {
+                return $http.post('/org/' + id);
+            },
+            updateGeneralOrgSettings: function (data) {
+                return $http.put('/org', data);
+            }
+        };
+    }]);
   

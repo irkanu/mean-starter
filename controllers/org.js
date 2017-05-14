@@ -44,8 +44,9 @@ exports.orgPost = async (req, res, next) => {
 /**
  * POST /org/:id
  */
-exports.orgGetById = async (req, res) => {
+exports.orgGetById = (req, res) => {
 
+    // TODO: make sure the request params have an id
     // req.assert('id', 'Organization ID must be specified!').notEmpty();
 
     const errors = req.validationErrors();
@@ -60,4 +61,34 @@ exports.orgGetById = async (req, res) => {
         }
     });
 
+};
+
+/**
+ * PUT /org
+ */
+exports.orgPutGeneral = (req, res) => {
+
+    req.assert('id', 'Organization ID was not sent! Please contact support if this error continues.').notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        return res.status(400).send(errors);
+    }
+
+    // TODO: Updating an Organization name propagate to the Organizations menu as well.
+
+    Org.findById(req.body.id, (err, org) => {
+        if (!err) {
+            org.name = req.body.name;
+            org.save((err) => {
+                if (!err) {
+                    res.send({
+                        org: org,
+                        msg: 'Your organization\'s general settings have been updated.'
+                    });
+                }
+            });
+        }
+    });
 };

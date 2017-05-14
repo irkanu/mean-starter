@@ -33,13 +33,18 @@ router.post('/reset/:token', userController.resetPost);
 
 // Org Controller Routes
 router.post('/org',
-	userController.ensureAuthenticated,
-	orgController.orgPost
+    userController.ensureAuthenticated,
+    orgController.orgPost
 );
-
 router.post('/org/:id',
-	// userController.ensureAuthenticated,
-	orgController.orgGetById
+    // userController.ensureAuthenticated,
+    // userController.ensureOrgAccess,
+    orgController.orgGetById
+);
+router.put('/org',
+    // userController.ensureAuthenticated,
+    // userController.ensureOrgAccess,
+    orgController.orgPutGeneral
 );
 
 module.exports = router;
