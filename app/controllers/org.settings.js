@@ -20,6 +20,7 @@ angular.module('MyApp')
                     Account.refresh($rootScope.user)
                         .then(function (response) {
                             $rootScope.currentUser = response.data.user;
+                            $window.localStorage.user = JSON.stringify(response.data.user);
                         })
                 })
                 .catch(function (response) {

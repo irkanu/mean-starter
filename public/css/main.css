@@ -5756,7 +5756,8 @@ html {
   min-height: 100%; }
 
 body {
-  margin-bottom: 44px; }
+  margin-bottom: 44px;
+  text-rendering: optimizeLegibility; }
 
 footer {
   position: absolute;

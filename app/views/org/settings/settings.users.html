@@ -1,5 +1,31 @@
-<pre>
-    {{currentOrg.members | json}}
-</pre>
+<div class="panel">
+    <div class="panel-body">
+        <legend>Users</legend>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="member in currentOrg.members">
+                    <td>{{member.name}}</td>
+                    <td>{{member.email}}</td>
+                    <!-- TODO: FIGURE OUT HOW TO GET ROLE FROM USER. -->
+                    <td>Owner</td>
+                    <!-- TODO: IMPLEMENT STATUS ON USER. -->
+                    <td>Joined</td>
+                    <!-- TODO: IMPLEMENT REMOVING USER FROM ORGANIZATION -->
+                    <td><a href="">Remove</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-<h4>Users</h4>
+    </div>
+</div>

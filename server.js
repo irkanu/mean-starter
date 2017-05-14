@@ -59,15 +59,15 @@ app.use('/', routes);
 app.get('*', helper.cleanHash);
 
 // Production error handler
-if (app.get('env') === 'production') {
+if (process.env.NODE_ENV === 'PRODUCTION') {
     app.use(function (err, req, res, next) {
         console.error(err.stack);
         res.sendStatus(err.status || 500);
     });
 }
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log('Express server listening on port ' + process.env.PORT || 3000 + ' in ' + app.get('env').toUpperCase() + ' environment.');
+app.listen(process.env.PORT, function() {
+    console.log('Express server listening on port ' + process.env.PORT + ' in ' + process.env.NODE_ENV + ' environment.');
 });
 
 module.exports = app;
