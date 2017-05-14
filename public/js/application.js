@@ -192,7 +192,7 @@ angular.module('MyApp')
     }]);
 
 angular.module('MyApp')
-    .controller('OrgSettingsCtrl', ["$scope", "Org", function ($scope, Org) {
+    .controller('OrgSettingsCtrl', ["$scope", "$rootScope", "Org", "Account", function ($scope, $rootScope, Org, Account) {
 
         $scope.init = function () {
             $scope.view_tab = 'general';
@@ -202,15 +202,20 @@ angular.module('MyApp')
             $scope.view_tab = tab;
         };
 
-        $scope.updateGeneralOrgSettings = function() {
+        $scope.updateGeneralOrgSettings = function () {
             Org.updateGeneralOrgSettings($scope.currentOrg)
-                .then(function(response){
-                    $scope.currentOrg = response.data.org;
+                .then(function (response) {
+                    // A bit of magic happens here - we don't need to rebind currentOrg because it's bound by the parent org.
                     $scope.messages = {
                         success: [response.data]
                     };
+                    // Refresh the currentUser object, so partials like the navigation have access to the new org data.
+                    Account.refresh($rootScope.user)
+                        .then(function (response) {
+                            $rootScope.currentUser = response.data.user;
+                        })
                 })
-                .catch(function(response) {
+                .catch(function (response) {
                     $scope.messages = {
                         error: Array.isArray(response.data) ? response.data : [response.data]
                     };
@@ -368,25 +373,28 @@ angular.module('MyApp')
     };
   }]);
 angular.module('MyApp')
-  .factory('Account', ["$http", function($http) {
-    return {
-      updateProfile: function(data) {
-        return $http.put('/account', data);
-      },
-      changePassword: function(data) {
-        return $http.put('/account', data);
-      },
-      deleteAccount: function() {
-        return $http.delete('/account');
-      },
-      forgotPassword: function(data) {
-        return $http.post('/forgot', data);
-      },
-      resetPassword: function(data) {
-        return $http.post('/reset', data);
-      }
-    };
-  }]);
+    .factory('Account', ["$http", function ($http) {
+        return {
+            updateProfile: function (data) {
+                return $http.put('/account', data);
+            },
+            changePassword: function (data) {
+                return $http.put('/account', data);
+            },
+            deleteAccount: function () {
+                return $http.delete('/account');
+            },
+            forgotPassword: function (data) {
+                return $http.post('/forgot', data);
+            },
+            resetPassword: function (data) {
+                return $http.post('/reset', data);
+            },
+            refresh: function (data) {
+                return $http.post('/account/refresh', data);
+            }
+        };
+    }]);
 angular.module('MyApp')
   .factory('Contact', ["$http", function($http) {
     return {

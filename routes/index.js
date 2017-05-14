@@ -22,6 +22,10 @@ router.delete('/account',
     userController.ensureAuthenticated,
     userController.accountDelete
 );
+router.post('/account/refresh',
+    userController.ensureAuthenticated,
+    userController.refresh
+);
 router.get('/unlink/:provider',
     userController.ensureAuthenticated,
     userController.unlink

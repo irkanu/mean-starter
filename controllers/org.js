@@ -76,13 +76,12 @@ exports.orgPutGeneral = (req, res) => {
         return res.status(400).send(errors);
     }
 
-    // TODO: Updating an Organization name propagate to the Organizations menu as well.
-
     Org.findById(req.body.id, (err, org) => {
         if (!err) {
             org.name = req.body.name;
             org.save((err) => {
                 if (!err) {
+                    console.log('orgPutGeneral() ', org);
                     res.send({
                         org: org,
                         msg: 'Your organization\'s general settings have been updated.'
