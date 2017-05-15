@@ -190,6 +190,7 @@ angular.module('MyApp')
         	};
 	      Project.createProject(data)
 	        .then(function(response){
+	        	$scope.currentOrg = response.data.org;
 	          $scope.messages = {
 	            success: [response.data]
 	          };

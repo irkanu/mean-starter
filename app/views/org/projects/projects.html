@@ -10,7 +10,13 @@
             <div ng-if="messages.success" role="alert" class="alert alert-success">
                 <div ng-repeat="success in messages.success">{{success.msg}}</div>
             </div>
-            
+
+            <div ng-if="currentOrg.projects.length > 0">
+                <ul ng-repeat="project in currentOrg.projects">
+                    <li><a ng-href="/org/{{currentOrg.id}}/project/{{project.id}}">{{project.name}}</a></li>
+                </ul>
+            </div>
+
             <form ng-submit="createProject()" class="form-horizontal">
                 <legend>Create Project</legend>
                 <div class="form-group">
