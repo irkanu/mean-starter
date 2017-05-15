@@ -179,12 +179,26 @@ angular.module('MyApp')
   }]);
 
 angular.module('MyApp')
-    .controller('OrgProjectsCtrl', ["$scope", function($scope) {
+    .controller('OrgProjectsCtrl', ["$scope", "Project", function($scope, Project) {
 
         $scope.init = function() {};
 
         $scope.createProject = function() {
-
+        	const data = {
+        		project: $scope.project,
+        		org: $scope.currentOrg
+        	};
+	      Project.createProject(data)
+	        .then(function(response){
+	          $scope.messages = {
+	            success: [response.data]
+	          };
+	        })
+	        .catch(function(response) {
+	          $scope.messages = {
+	            error: Array.isArray(response.data) ? response.data : [response.data]
+	          };
+	        });
         };
 
         $scope.init();
@@ -419,3 +433,11 @@ angular.module('MyApp')
         };
     }]);
   
+angular.module('MyApp')
+    .factory('Project', ["$http", function ($http) {
+        return {
+            createProject: function (data) {
+                return $http.post('/project', data);
+            }
+        };
+    }]);

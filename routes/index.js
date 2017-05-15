@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/user');
 const contactController = require('../controllers/contact');
 const orgController = require('../controllers/org');
+const projectController = require('../controllers/project');
 const path = require('path');
 
 // Home Route
@@ -49,6 +50,12 @@ router.put('/org',
     // userController.ensureAuthenticated,
     // userController.ensureOrgAccess,
     orgController.orgPutGeneral
+);
+
+// Project Controller Routes
+router.post('/project',
+    userController.ensureAuthenticated,
+    projectController.projectPost
 );
 
 module.exports = router;

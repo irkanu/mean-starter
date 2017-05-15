@@ -16,6 +16,10 @@ const orgSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         autopopulate: true
+    }],
+    projects: [{
+    	type: mongoose.Schema.Types.ObjectId,
+    	ref: 'Project'
     }]
 }, schemaOptions);
 
