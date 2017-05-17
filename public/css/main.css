@@ -5913,3 +5913,16 @@ textarea {
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer; }
+
+.navbar:after {
+  clear: both;
+  height: 5px;
+  background: #24C6DC;
+  background: linear-gradient(to right, #514A9D, #24C6DC);
+  display: block; }
+
+.navbar {
+  margin-bottom: 0; }
+
+#main {
+  margin: 2em 0; }

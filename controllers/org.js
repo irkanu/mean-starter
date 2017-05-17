@@ -46,8 +46,7 @@ exports.orgPost = async (req, res, next) => {
  */
 exports.orgGetById = (req, res) => {
 
-    // TODO: make sure the request params have an id
-    // req.assert('id', 'Organization ID must be specified!').notEmpty();
+    req.assert('id', 'Organization ID must be specified!').notEmpty();
 
     const errors = req.validationErrors();
 

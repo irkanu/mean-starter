@@ -37,9 +37,14 @@ angular.module('MyApp', ['ngRoute', 'satellizer', 'ui.bootstrap'])
                 controller: 'ResetCtrl',
                 resolve: {skipIfAuthenticated: skipIfAuthenticated}
             })
-            .when('/org/:id', {
+            .when('/org/:orgId', {
                 templateUrl: 'views/org/org.html',
                 controller: 'OrgCtrl',
+                resolve: {loginRequired: loginRequired}
+            })
+            .when('/org/:orgId/project/:projectId', {
+                templateUrl: 'views/project/project.html',
+                controller: 'ProjectCtrl',
                 resolve: {loginRequired: loginRequired}
             })
             .otherwise({
@@ -163,7 +168,7 @@ angular.module('MyApp')
     };
 
     $scope.getCurrentOrg = function() {
-      Org.getOrgById($routeParams.id)
+      Org.getOrgById($routeParams.orgId)
         .then(function(response){
           $scope.currentOrg = response.data;
         })
@@ -207,7 +212,7 @@ angular.module('MyApp')
     }]);
 
 angular.module('MyApp')
-    .controller('OrgSettingsCtrl', ["$scope", "$rootScope", "Org", "Account", function ($scope, $rootScope, Org, Account) {
+    .controller('OrgSettingsCtrl', ["$scope", "$rootScope", "$window", "Org", "Account", function ($scope, $rootScope, $window, Org, Account) {
 
         $scope.init = function () {
             $scope.view_tab = 'general';
@@ -335,6 +340,42 @@ angular.module('MyApp')
     };
   }]);
 angular.module('MyApp')
+  .controller('ProjectCtrl', ["$scope", "$rootScope", "$route", "$location", "$window", "$auth", "$routeParams", "Org", "Project", function($scope, $rootScope, $route, $location, $window, $auth, $routeParams, Org, Project) {
+
+    $scope.init = function() {
+      $scope.getCurrentProject();
+      $scope.getCurrentOrg();
+    };
+
+    $scope.getCurrentOrg = function() {
+      Org.getOrgById($routeParams.orgId)
+        .then(function(response){
+          $scope.currentOrg = response.data;
+        })
+        .catch(function(response){
+          $scope.messages = {
+            error: Array.isArray(response.data) ? response.data : [response.data]
+          };
+        })
+    };
+
+    $scope.getCurrentProject = function() {
+      Project.getProjectById($routeParams.projectId)
+        .then(function(response){
+          $scope.currentProject = response.data;
+        })
+        .catch(function(response){
+          $scope.messages = {
+            error: Array.isArray(response.data) ? response.data : [response.data]
+          };
+        })
+    };
+
+    $scope.init();
+    
+  }]);
+
+angular.module('MyApp')
   .controller('ResetCtrl', ["$scope", "Account", function($scope, Account) {
     $scope.resetPassword = function() {
       Account.resetPassword($scope.user)
@@ -439,6 +480,9 @@ angular.module('MyApp')
         return {
             createProject: function (data) {
                 return $http.post('/project', data);
+            },
+            getProjectById: function (id) {
+                return $http.post('/project/' + id);
             }
         };
     }]);

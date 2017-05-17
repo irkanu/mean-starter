@@ -6,7 +6,7 @@ angular.module('MyApp')
     };
 
     $scope.getCurrentOrg = function() {
-      Org.getOrgById($routeParams.id)
+      Org.getOrgById($routeParams.orgId)
         .then(function(response){
           $scope.currentOrg = response.data;
         })

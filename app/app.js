@@ -35,9 +35,14 @@ angular.module('MyApp', ['ngRoute', 'satellizer', 'ui.bootstrap'])
                 controller: 'ResetCtrl',
                 resolve: {skipIfAuthenticated: skipIfAuthenticated}
             })
-            .when('/org/:id', {
+            .when('/org/:orgId', {
                 templateUrl: 'views/org/org.html',
                 controller: 'OrgCtrl',
+                resolve: {loginRequired: loginRequired}
+            })
+            .when('/org/:orgId/project/:projectId', {
+                templateUrl: 'views/project/project.html',
+                controller: 'ProjectCtrl',
                 resolve: {loginRequired: loginRequired}
             })
             .otherwise({

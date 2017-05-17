@@ -1,5 +1,5 @@
 angular.module('MyApp')
-    .controller('OrgSettingsCtrl', function ($scope, $rootScope, Org, Account) {
+    .controller('OrgSettingsCtrl', function ($scope, $rootScope, $window, Org, Account) {
 
         $scope.init = function () {
             $scope.view_tab = 'general';

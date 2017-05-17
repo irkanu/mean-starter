@@ -3,6 +3,9 @@ angular.module('MyApp')
         return {
             createProject: function (data) {
                 return $http.post('/project', data);
+            },
+            getProjectById: function (id) {
+                return $http.post('/project/' + id);
             }
         };
     });

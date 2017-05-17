@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body ng-app="MyApp">
-  <div ng-include="'views/partials/header.html'"></div>
-  <div ng-view></div>
-  <div ng-include="'views/partials/footer.html'"></div>
+  <header id="header" ng-include="'views/partials/header.html'"></header>
+  <section id="main" ng-view></section>
+  <footer id="footer" ng-include="'views/partials/footer.html'"></footer>
 
   <script src="/js/lib/jquery.js"></script>
   <script src="/js/lib/bootstrap.js"></script>

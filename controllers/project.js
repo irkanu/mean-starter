@@ -39,3 +39,23 @@ exports.projectPost = function(req, res) {
         }
     });
 };
+
+/**
+ * POST /project/:id
+ */
+exports.projectGetById = (req, res) => {
+    req.assert('id', 'Project ID must be specified!').notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        return res.status(400).send(errors);
+    }
+
+    Project.findById(req.params.id, (err, project) => {
+        if (!err) {
+            res.status(200).json(project);
+        }
+    });
+
+};

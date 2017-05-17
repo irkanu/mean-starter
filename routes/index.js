@@ -42,12 +42,12 @@ router.post('/org',
     orgController.orgPost
 );
 router.post('/org/:id',
-    // userController.ensureAuthenticated,
+    userController.ensureAuthenticated,
     // userController.ensureOrgAccess,
     orgController.orgGetById
 );
 router.put('/org',
-    // userController.ensureAuthenticated,
+    userController.ensureAuthenticated,
     // userController.ensureOrgAccess,
     orgController.orgPutGeneral
 );
@@ -57,5 +57,10 @@ router.post('/project',
     userController.ensureAuthenticated,
     projectController.projectPost
 );
+router.post('/project/:id',
+    userController.ensureAuthenticated,
+    projectController.projectGetById
+);
+
 
 module.exports = router;
