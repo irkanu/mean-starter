@@ -9,6 +9,9 @@ angular.module('MyApp')
             },
             updateGeneralOrgSettings: function (data) {
                 return $http.put('/org', data);
+            },
+            renameOrg: function(data) {
+                return $http.put('/org/rename', data);
             }
         };
     });

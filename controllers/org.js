@@ -90,3 +90,31 @@ exports.orgPutGeneral = (req, res) => {
         }
     });
 };
+
+/**
+ * PUT /org/rename
+ */
+exports.orgPutRename = (req, res) => {
+
+    req.assert('id', 'Organization ID was not sent! Please contact support if this error continues.').notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        return res.status(400).send(errors);
+    }
+
+    Org.findById(req.body.id, (err, org) => {
+        if (!err) {
+            org.name = req.body.name;
+            org.save((err) => {
+                if (!err) {
+                    res.send({
+                        org: org,
+                        msg: 'Your organization has been renamed successfully!'
+                    });
+                }
+            });
+        }
+    });
+};

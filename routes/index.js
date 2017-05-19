@@ -51,6 +51,11 @@ router.put('/org',
     // userController.ensureOrgAccess,
     orgController.orgPutGeneral
 );
+router.put('/org/rename',
+    userController.ensureAuthenticated,
+    // userController.ensureOrgAccess,
+    orgController.orgPutRename
+);
 
 // Project Controller Routes
 router.post('/project',

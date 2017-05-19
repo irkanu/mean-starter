@@ -1,6 +1,51 @@
-<div class="container">
+<div class="container org">
 
-	<h5>{{currentOrg.name}}</h5>
+	<div ng-if="messages.error" role="alert" class="alert alert-danger">
+		<div ng-repeat="error in messages.error">{{error.msg}}</div>
+	</div>
+	<div ng-if="messages.success" role="alert" class="alert alert-success">
+		<div ng-repeat="success in messages.success">{{success.msg}}</div>
+	</div>
+
+	<h5 class="text-center">Organization</h5>
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+
+			<h1 ng-hide="editingOrgName" ng-click="editingOrgName = true" class="text-center org__name">{{currentOrg.name}}</h1>
+
+			<form class="org__rename" ng-show="editingOrgName" ng-submit="renameCurrentOrg(); editingOrgName = false;">
+				<input class="form-control org__rename--input" type="text" ng-model="currentOrg.name" ng-required />
+				<button type="submit" class="btn btn-success">Save</button>
+			</form>
+
+		</div>
+	</div>
+
+
+	<hr>
+
+	<h5 class="text-center">Projects</h5>
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3" ng-repeat="project in currentOrg.projects">
+			<h4 class="text-center">
+				<a ng-href="/org/{{currentOrg.id}}/project/{{project.id}}">{{project.name}}</a>
+			</h4>
+		</div>
+	</div>
+
+	<hr>
+
+	<h5 class="text-center">Settings</h5>
+
+	<div class="row text-center">
+		<div class="col-md-6 col-md-offset-3">
+			<h4><a href="#">General</a></h4>
+			<h4><a href="#">Users</a></h4>
+			<h4><a href="#">Billing</a></h4>
+		</div>
+	</div>
 
 	<uib-tabset active="active">
 		<uib-tab index="0" heading="Projects">

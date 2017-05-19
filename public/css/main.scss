@@ -1,15 +1,16 @@
-$body-bg: #f4f4f4;
+$body-bg: #ecf0f1;
 $line-height-base: 1.57142857;
-$link-color: #1d7cf4;
+$link-color: #2980b9;
 $link-hover-decoration: none;
 
-$brand-success: #29b35b;
-$brand-danger: #b61b17;
+$brand-success: #27ae60;
+$brand-danger: #c0392b;
+$brand-purple: #8e44ad;
 
 $font-family-base: "proxima-nova", Helvetica, Arial, sans-serif;
 $headings-font-weight: 600;
 
-$alert-info-border: #31708f;
+$alert-info-border: #2980b9;
 $alert-success-border: darken($brand-success, 12%);
 $alert-success-text: #fff;
 $alert-success-bg: $brand-success;
@@ -87,7 +88,7 @@ footer {
 }
 
 .navbar-default .navbar-nav > li.active > a {
-  border-bottom-color: #3f51b5;
+  border-bottom-color: $brand-success;
 }
 
 // Panels
@@ -140,19 +141,19 @@ footer {
 
 .btn-success {
   border-color: #208a46;
-  background: #29b35b linear-gradient(to bottom, #2ec866, #29b35b);
+  background: $brand-success linear-gradient(to bottom, #2ec866, $brand-success);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1), inset 0 -1px 4px rgba(32, 138, 70, 0.3);
   &:active {
-    background: darken(#29b35b, 6%) linear-gradient(to bottom, darken(#2ec866, 6%), darken(#29b35b, 6%));
+    background: darken($brand-success, 6%) linear-gradient(to bottom, darken(#2ec866, 6%), darken($brand-success, 6%));
   }
 }
 
 .btn-danger {
   border-color: #8c1512;
-  background: #b61b17 linear-gradient(to bottom, #cc1e1a, #b61b17);
+  background: $brand-danger linear-gradient(to bottom, #cc1e1a, $brand-danger);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1), inset 0 -1px 4px rgba(140, 21, 18, 0.3);
   &:active {
-    background: darken(#b61b17, 6%) linear-gradient(to bottom, darken(#cc1e1a, 6%), darken(#b61b17, 6%));
+    background: darken($brand-danger, 6%) linear-gradient(to bottom, darken(#cc1e1a, 6%), darken($brand-danger, 6%));
   }
 }
 
@@ -226,6 +227,10 @@ textarea {
   box-shadow: inset 0 1px 2px rgba(150, 160, 175, 0.1), inset 0 1px 15px rgba(150, 160, 175, 0.05);
 }
 
+.form-control:focus {
+  border-color: #3498db;
+}
+
 .form-group > label {
   text-transform: uppercase;
   font-size: 13px;
@@ -265,9 +270,7 @@ textarea {
 .navbar:after {
     clear: both;
     height: 5px;
-    background: #24C6DC;
-    background: -webkit-linear-gradient(to right, #514A9D, #24C6DC);
-    background: linear-gradient(to right, #514A9D, #24C6DC);
+    background: #2ecc71;
     display: block;
 }
 
@@ -277,4 +280,41 @@ textarea {
 
 #main {
   margin: 2em 0;
+}
+
+.nav .open > a, .nav .open > a:hover,
+.nav .open > a:focus,
+.navbar-default .navbar-nav > li > a:hover {
+  border-color: transparent;
+}
+
+hr {
+  border-color: #bdc3c7;
+}
+
+.org__rename {
+  margin-top: 21px;
+  text-align: center;
+}
+
+.org__rename--input {
+  width: auto;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+  margin: 0 auto 15px;
+}
+
+.org__name:hover {
+  position: relative;
+  bottom: 4px;
+  margin-bottom: -3.5px;
+  margin-top: 15px;
+  height: auto;
+  padding: 8px 12px;
+  border: 2px solid #ebebeb;
+  border-radius: 0;
+  box-shadow: inset 0 1px 2px rgba(150, 160, 175, 0.1), inset 0 1px 15px rgba(150, 160, 175, 0.05);
+  background-color: #fff;
 }
