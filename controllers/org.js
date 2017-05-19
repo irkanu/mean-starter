@@ -68,6 +68,7 @@ exports.orgGetById = (req, res) => {
 exports.orgPutGeneral = (req, res) => {
 
     req.assert('id', 'Organization ID was not sent! Please contact support if this error continues.').notEmpty();
+    req.assert('name', 'Organization name cannot be blank!').notEmpty();
 
     const errors = req.validationErrors();
 
@@ -97,6 +98,7 @@ exports.orgPutGeneral = (req, res) => {
 exports.orgPutRename = (req, res) => {
 
     req.assert('id', 'Organization ID was not sent! Please contact support if this error continues.').notEmpty();
+    req.assert('name', 'Organization name cannot be blank!').notEmpty();
 
     const errors = req.validationErrors();
 

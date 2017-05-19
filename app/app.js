@@ -37,7 +37,7 @@ angular.module('MyApp', ['ngRoute', 'satellizer', 'ui.bootstrap'])
             })
             .when('/org/:orgId', {
                 templateUrl: 'views/org/org.html',
-                controller: 'OrgCtrl',
+                // controller: 'OrgCtrl',
                 resolve: {loginRequired: loginRequired}
             })
             .when('/org/:orgId/project/:projectId', {

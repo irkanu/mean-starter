@@ -12,11 +12,28 @@ angular.module('MyApp')
         });
 
         $scope.renameCurrentOrg = function () {
+
+            $scope.editingOrgName = false;
+
+            // Make sure the name isn't empty first.
+            if ($scope.currentOrg.name.length < 1) {
+                $scope.messages = {
+                    error: [{
+                        msg: 'Organization name cannot be blank!'
+                    }]
+                };
+                $scope.editingOrgName = true;
+
+                // No need to hit the server if we there is no name.
+                return false;
+            }
+
             // Only need to rename if the name actually changed. :)
             if ($scope.currentOrg.name !== $scope.currentOrgSnapshot.name) {
                 Org.renameOrg($scope.currentOrg)
                     .then(function (response) {
                         $scope.currentOrg = response.data.org;
+                        $scope.currentOrgSnapshot = $scope.currentOrg;
                         $scope.messages = {
                             success: [response.data]
                         };
@@ -27,6 +44,11 @@ angular.module('MyApp')
                         };
                     });
             }
+        };
+
+        $scope.revertRename = function () {
+            $scope.editingOrgName = false;
+            $scope.currentOrg.name = $scope.currentOrgSnapshot.name;
         };
 
         $scope.getCurrentOrg = function () {

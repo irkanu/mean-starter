@@ -39,7 +39,7 @@ angular.module('MyApp', ['ngRoute', 'satellizer', 'ui.bootstrap'])
             })
             .when('/org/:orgId', {
                 templateUrl: 'views/org/org.html',
-                controller: 'OrgCtrl',
+                // controller: 'OrgCtrl',
                 resolve: {loginRequired: loginRequired}
             })
             .when('/org/:orgId/project/:projectId', {
@@ -174,11 +174,28 @@ angular.module('MyApp')
         });
 
         $scope.renameCurrentOrg = function () {
+
+            $scope.editingOrgName = false;
+
+            // Make sure the name isn't empty first.
+            if ($scope.currentOrg.name.length < 1) {
+                $scope.messages = {
+                    error: [{
+                        msg: 'Organization name cannot be blank!'
+                    }]
+                };
+                $scope.editingOrgName = true;
+
+                // No need to hit the server if we there is no name.
+                return false;
+            }
+
             // Only need to rename if the name actually changed. :)
             if ($scope.currentOrg.name !== $scope.currentOrgSnapshot.name) {
                 Org.renameOrg($scope.currentOrg)
                     .then(function (response) {
                         $scope.currentOrg = response.data.org;
+                        $scope.currentOrgSnapshot = $scope.currentOrg;
                         $scope.messages = {
                             success: [response.data]
                         };
@@ -189,6 +206,11 @@ angular.module('MyApp')
                         };
                     });
             }
+        };
+
+        $scope.revertRename = function () {
+            $scope.editingOrgName = false;
+            $scope.currentOrg.name = $scope.currentOrgSnapshot.name;
         };
 
         $scope.getCurrentOrg = function () {
@@ -209,27 +231,28 @@ angular.module('MyApp')
     }]);
 
 angular.module('MyApp')
-    .controller('OrgProjectsCtrl', ["$scope", "Project", function($scope, Project) {
+    .controller('OrgProjectsCtrl', ["$scope", "Project", function ($scope, Project) {
 
-        $scope.init = function() {};
+        $scope.init = function () {
+        };
 
-        $scope.createProject = function() {
-        	const data = {
-        		project: $scope.project,
-        		org: $scope.currentOrg
-        	};
-	      Project.createProject(data)
-	        .then(function(response){
-	        	$scope.currentOrg = response.data.org;
-	          $scope.messages = {
-	            success: [response.data]
-	          };
-	        })
-	        .catch(function(response) {
-	          $scope.messages = {
-	            error: Array.isArray(response.data) ? response.data : [response.data]
-	          };
-	        });
+        $scope.createProject = function () {
+            const data = {
+                project: $scope.project,
+                org: $scope.currentOrg
+            };
+            Project.createProject(data)
+                .then(function (response) {
+                    $scope.currentOrg = response.data.org;
+                    $scope.messages = {
+                        success: [response.data]
+                    };
+                })
+                .catch(function (response) {
+                    $scope.messages = {
+                        error: Array.isArray(response.data) ? response.data : [response.data]
+                    };
+                });
         };
 
         $scope.init();
