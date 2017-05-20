@@ -1,7 +1,8 @@
 angular.module('MyApp')
-    .controller('OrgCtrl', function ($scope, $rootScope, $location, $window, $auth, $routeParams, Org) {
+    .controller('OrgCtrl', function ($scope, $rootScope, $location, $window, $auth, $routeParams, $uibModal, $log, Org) {
 
         $scope.editingOrgName = false;
+        $scope.animationsEnabled = true;
 
         $scope.init = function () {
             $scope.getCurrentOrg();
@@ -62,6 +63,24 @@ angular.module('MyApp')
                         error: Array.isArray(response.data) ? response.data : [response.data]
                     };
                 })
+        };
+
+        $scope.createProject = function () {
+            $scope.createProjectModalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/partials/createProjectModal.html',
+                controller: 'CreateProjectModal',
+                resolve: {
+                    currentOrg: function () {
+                        return $scope.currentOrg;
+                    }
+                }
+            });
+
+            $scope.createProjectModalInstance.result.then(function (success) {
+                $scope.messages = success.msg;
+                $scope.currentOrg = success.org;
+            }, function (close) {});
         };
 
         $scope.init();

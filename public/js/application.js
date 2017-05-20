@@ -161,9 +161,44 @@ angular.module('MyApp')
   }]);
 
 angular.module('MyApp')
-    .controller('OrgCtrl', ["$scope", "$rootScope", "$location", "$window", "$auth", "$routeParams", "Org", function ($scope, $rootScope, $location, $window, $auth, $routeParams, Org) {
+    .controller('CreateProjectModal', ["$scope", "$uibModalInstance", "currentOrg", "Project", function ($scope, $uibModalInstance, currentOrg, Project) {
+
+        $scope.currentOrg = currentOrg;
+        $scope.submitting = false;
+
+        $scope.createProject = function () {
+            $scope.submitting = true;
+            const data = {
+                project: $scope.project,
+                org: $scope.currentOrg
+            };
+            Project.createProject(data)
+                .then(function (response) {
+                    $scope.currentOrg = response.data.org;
+                    $scope.messages = {
+                        success: [response.data]
+                    };
+                    $uibModalInstance.close({msg: $scope.messages, org: $scope.currentOrg});
+                })
+                .catch(function (response) {
+                    $scope.submitting = false;
+                    $scope.messages = {
+                        error: Array.isArray(response.data) ? response.data : [response.data]
+                    };
+                });
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('jk');
+        };
+
+    }]);
+
+angular.module('MyApp')
+    .controller('OrgCtrl', ["$scope", "$rootScope", "$location", "$window", "$auth", "$routeParams", "$uibModal", "$log", "Org", function ($scope, $rootScope, $location, $window, $auth, $routeParams, $uibModal, $log, Org) {
 
         $scope.editingOrgName = false;
+        $scope.animationsEnabled = true;
 
         $scope.init = function () {
             $scope.getCurrentOrg();
@@ -224,6 +259,24 @@ angular.module('MyApp')
                         error: Array.isArray(response.data) ? response.data : [response.data]
                     };
                 })
+        };
+
+        $scope.createProject = function () {
+            $scope.createProjectModalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/partials/createProjectModal.html',
+                controller: 'CreateProjectModal',
+                resolve: {
+                    currentOrg: function () {
+                        return $scope.currentOrg;
+                    }
+                }
+            });
+
+            $scope.createProjectModalInstance.result.then(function (success) {
+                $scope.messages = success.msg;
+                $scope.currentOrg = success.org;
+            }, function (close) {});
         };
 
         $scope.init();
