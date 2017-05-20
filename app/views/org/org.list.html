@@ -1,0 +1,18 @@
+<section id="messages" class="row text-center">
+    <div class="col-md-6 col-md-offset-3">
+        <div ng-if="messages.error" role="alert" class="alert alert-danger">
+            <div ng-repeat="error in messages.error">{{error.msg}}</div>
+        </div>
+        <div ng-if="messages.success" role="alert" class="alert alert-success">
+            <div ng-repeat="success in messages.success">{{success.msg}}</div>
+        </div>
+    </div>
+</section>
+
+<h5 class="text-center">All Organizations</h5>
+
+<section class="row text-center">
+    <div class="col-md-6 col-md-offset-3" ng-repeat="o in currentUser.orgs">
+        <h2><a href="org/{{o.org.id}}">{{o.org.name}}</a></h2>
+    </div>
+</section>

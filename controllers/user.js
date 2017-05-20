@@ -336,8 +336,15 @@ exports.resetPost = function (req, res, next) {
  * POST /account/refresh
  */
 exports.refresh = function(req, res) {
+    req.assert('id', 'A user was not sent with this request - please contact support!').notEmpty();
 
-    User.findById(req.user.id, function(err, user){
+    var errors = req.validationErrors();
+
+    if (errors) {
+        return res.status(400).send(errors);
+    }
+
+    User.findById(req.body.id, function(err, user){
         if (!err) {
             res.status(200).json({user: user});
         } else {

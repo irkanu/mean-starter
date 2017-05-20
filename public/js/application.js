@@ -37,6 +37,11 @@ angular.module('MyApp', ['ngRoute', 'satellizer', 'ui.bootstrap'])
                 controller: 'ResetCtrl',
                 resolve: {skipIfAuthenticated: skipIfAuthenticated}
             })
+            .when('/organizations', {
+                templateUrl: 'views/org/org.list.html',
+                controller: 'OrgListCtrl',
+                resolve: {loginRequired: loginRequired}
+            })
             .when('/org/:orgId', {
                 templateUrl: 'views/org/org.html',
                 // controller: 'OrgCtrl',
@@ -277,6 +282,26 @@ angular.module('MyApp')
                 $scope.messages = success.msg;
                 $scope.currentOrg = success.org;
             }, function (close) {});
+        };
+
+        $scope.init();
+
+    }]);
+
+angular.module('MyApp')
+    .controller('OrgListCtrl', ["$scope", "$rootScope", "$window", "Account", function ($scope, $rootScope, $window, Account) {
+
+        $scope.init = function () {
+            $scope.refreshCurrentUser();
+        };
+
+        $scope.refreshCurrentUser = function () {
+            Account.refresh($rootScope.currentUser)
+                .then(function (response) {
+                    console.log(response);
+                    $rootScope.currentUser = response.data.user;
+                    $window.localStorage.user = JSON.stringify(response.data.user);
+                })
         };
 
         $scope.init();

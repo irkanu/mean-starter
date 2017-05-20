@@ -35,6 +35,11 @@ angular.module('MyApp', ['ngRoute', 'satellizer', 'ui.bootstrap'])
                 controller: 'ResetCtrl',
                 resolve: {skipIfAuthenticated: skipIfAuthenticated}
             })
+            .when('/organizations', {
+                templateUrl: 'views/org/org.list.html',
+                controller: 'OrgListCtrl',
+                resolve: {loginRequired: loginRequired}
+            })
             .when('/org/:orgId', {
                 templateUrl: 'views/org/org.html',
                 // controller: 'OrgCtrl',

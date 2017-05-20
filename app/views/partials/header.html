@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/" class="navbar-brand">sitemetrics.io</a>
+            <a href="/" class="navbar-brand">SUPER AWESOME NAME</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -16,16 +16,7 @@
 
             </ul>
             <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
-                <li ng-if="currentUser.orgs.length > 0" class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                        Organizations <i class="caret"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li ng-repeat="o in currentUser.orgs">
-                            <a href="/org/{{o.org._id}}">{{o.org.name}}</a>
-                        </li>
-                    </ul>
-                </li>
+                <li ng-if="currentUser.orgs.length > 0"><a href="/organizations">Organizations</a></li>
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="navbar-avatar dropdown-toggle">
                         <img ng-src="{{currentUser.picture || currentUser.gravatar}}"> {{currentUser.name || currentUser.email || currentUser.id}} <i class="caret"></i>
