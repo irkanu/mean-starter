@@ -1,12 +1,54 @@
 <div class="container">
 
-<pre>
-{{currentProject | json}}
-</pre>
+    <p class="text-center back_link"><strong>&larr; <a href="/org/{{currentOrg.id}}">Back to {{currentOrg.name}}?</a></strong></p>
 
-	<h5>{{currentOrg.name}} | {{currentProject.name}}</h5>
+    <section id="messages" class="row text-center">
+        <div class="col-md-6 col-md-offset-3">
+            <div ng-if="messages.error" role="alert" class="alert alert-danger">
+                <div ng-repeat="error in messages.error">{{error.msg}}</div>
+            </div>
+            <div ng-if="messages.success" role="alert" class="alert alert-success">
+                <div ng-repeat="success in messages.success">{{success.msg}}</div>
+            </div>
+        </div>
+    </section>
 
-	<uib-tabset active="active">
+	<h5 class="text-center">Project</h5>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <h1 class="text-center org__name">{{currentProject.name}}</h1>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <h5 class="text-center">Experiments</h5>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h4 class="text-center">
+                <a ng-href="#">Awesome Experiment!!!!</a>
+            </h4>
+        </div>
+    </div>
+
+    <p class="text-center"><strong><a href="">Create a new expirement?</a> &rarr;</strong></p>
+
+    <hr>
+
+    <h5 class="text-center">Settings</h5>
+
+    <div class="row text-center">
+        <div class="col-md-6 col-md-offset-3">
+            <h4><a href="#">General</a></h4>
+            <h4><a href="#">Guests</a></h4>
+        </div>
+    </div>
+
+<!-- 	<uib-tabset active="active">
 		<uib-tab index="0" heading="Overview">
 			<p>Project details go here</p>
 		</uib-tab>
@@ -19,6 +61,6 @@
 		<uib-tab index="3" heading="Settings">
 			<p>Project settings go here</p>
 		</uib-tab>
-	</uib-tabset>
+	</uib-tabset> -->
 
 </div>
