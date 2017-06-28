@@ -1,9 +1,9 @@
 $body-bg: #ecf0f1;
 $line-height-base: 1.57142857;
-$link-color: #2980b9;
+$link-color: #0f55eb;
 $link-hover-decoration: none;
 
-$brand-success: #27ae60;
+$brand-success: #0f55eb;
 $brand-danger: #c0392b;
 $brand-purple: #8e44ad;
 
@@ -22,15 +22,16 @@ $navbar-height: 56px;
 $navbar-default-bg: #fff;
 $navbar-default-border: #e0e0e0;
 $navbar-default-color: #757575;
-$navbar-default-link-color: #262626;
+$navbar-default-link-color: #0D071F;
 $navbar-default-link-hover-bg: transparent;
 $navbar-default-link-active-bg: transparent;
-$navbar-default-link-active-color: #262626;
+$navbar-default-link-active-color: #192633;
 
 $panel-heading-padding: 20px 30px;
 $panel-body-padding: 30px;
 
 @import "vendor/bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Bitter:400,700|Montserrat:500');
 
 // Scaffolding
 // -------------------------
@@ -69,6 +70,23 @@ footer {
 // Navbar
 // -------------------------
 
+.navbar-default .navbar-header .navbar-brand {
+  font-family: 'Bitter', serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: #192633;
+  font-size: 24px;
+}
+
+.navbar-default .navbar-header .navbar-brand:before {
+  font-family: 'Montserrat', sans-serif;
+  content: 'OO';
+  letter-spacing: -11px;
+  padding-right: 15px;
+  font-weight: 500;
+}
+
 .navbar-default .navbar-nav > li > a {
   border-bottom: 3px solid transparent;
   padding-bottom: ($navbar-padding-vertical - 3);
@@ -87,9 +105,9 @@ footer {
   }
 }
 
-.navbar-default .navbar-nav > li.active > a {
-  border-bottom-color: $brand-success;
-}
+//.navbar-default .navbar-nav > li.active > a {
+//  border-bottom-color: $brand-success;
+//}
 
 // Panels
 // -------------------------
@@ -140,11 +158,11 @@ footer {
 }
 
 .btn-success {
-  border-color: #208a46;
-  background: $brand-success linear-gradient(to bottom, #2ec866, $brand-success);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1), inset 0 -1px 4px rgba(32, 138, 70, 0.3);
+  border-color: darken($brand-success, 12%);
+  background: $brand-success linear-gradient(to bottom, lighten($brand-success, 6%), $brand-success);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1), inset 0 -1px 4px darken($brand-success, 12%);
   &:active {
-    background: darken($brand-success, 6%) linear-gradient(to bottom, darken(#2ec866, 6%), darken($brand-success, 6%));
+    background: darken($brand-success, 6%) linear-gradient(to bottom, darken($brand-success, 6%), darken($brand-success, 6%));
   }
 }
 
@@ -228,7 +246,7 @@ textarea {
 }
 
 .form-control:focus {
-  border-color: #3498db;
+  border-color: $brand-success;
 }
 
 .form-group > label {
@@ -267,15 +285,16 @@ textarea {
   cursor: pointer;
 }
 
-.navbar:after {
-    clear: both;
-    height: 5px;
-    background: #2ecc71;
-    display: block;
-}
+//.navbar:after {
+//    clear: both;
+//    height: 5px;
+//    background: #192633;
+//    display: block;
+//}
 
 .navbar {
   margin-bottom: 0;
+  box-shadow: 0 1px 8px 0 rgba(0,0,0,.1);
 }
 
 #main {
@@ -331,4 +350,8 @@ hr {
 .back_link {
   position: relative;
   bottom: 2em;
+}
+
+.ls0 {
+  letter-spacing: 0;
 }
